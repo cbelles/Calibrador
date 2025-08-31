@@ -1,0 +1,135 @@
+{
+    "calibers": [
+        {
+            "dimensions": [
+                {
+                    "max": 9999,
+                    "min": 0,
+                    "type": 1
+                },
+                {
+                    "max": 9999,
+                    "min": 0,
+                    "type": 0
+                },
+                {
+                    "max": 255,
+                    "min": 0,
+                    "type": 2
+                }
+            ],
+            "name": "C0"
+        },
+        {
+            "dimensions": [
+                {
+                    "max": 9999,
+                    "min": 0,
+                    "type": 1
+                },
+                {
+                    "max": 9999,
+                    "min": 0,
+                    "type": 0
+                },
+                {
+                    "max": 255,
+                    "min": 0,
+                    "type": 2
+                }
+            ],
+            "name": "C1"
+        },
+        {
+            "dimensions": [
+                {
+                    "max": 9999,
+                    "min": 0,
+                    "type": 1
+                },
+                {
+                    "max": 9999,
+                    "min": 0,
+                    "type": 0
+                },
+                {
+                    "max": 255,
+                    "min": 0,
+                    "type": 2
+                }
+            ],
+            "name": "C2"
+        }
+    ],
+    "colorindexfruta": "NARANJA",
+    "dimensionNames": [
+        "DIAMETER_MIN",
+        "DIAMETER_MAX",
+        "COLOR"
+    ],
+    "fruta": "MADARINA",
+    "name": "C",
+    "salidas": [
+        {
+            "C0": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        {
+            "C1": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        {
+            "C2": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        }
+    ],
+    "variedad": "TODAS"
+}

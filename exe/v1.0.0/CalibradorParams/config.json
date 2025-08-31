@@ -1,0 +1,28 @@
+{
+  "logo": {
+    "showLogo": true,
+    "dimX": 400,
+    "dimY":200
+  },
+  
+  "general": {
+    "debugMode": true,
+    "pathPrograms": "/home/pi/CalibradorParams/Programs",
+    "pathConfig": "/home/pi/CalibradorParams/Config",
+    "pathPartidas": "/home/pi/CalibradorParams/Partidas"
+  },
+
+  "config": {
+    "numLineas": 1, 	
+    "numSalidas": 16,
+    "idioma": "PT" 
+  },
+
+  "dimensiones": {
+    "nombre": ["DIAMETER_MAX", "DIAMETER_MIN", "COLOR", "QUALITY"], 
+    "domain_min_value": [0,0,0,0],
+    "domain_max_value": [9999,9999,255,255]	
+  }
+
+}
+

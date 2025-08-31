@@ -1,0 +1,16 @@
+{
+ 
+
+  	"MADARINA": {
+  		"colorIndex": "NARANJA",
+  		"VARIEDADES": ["TODAS", "CLEMENULES","MARISOL","ORONULES"]
+    	},
+    	
+  	"TOMATE": {
+  		"colorIndex": "HUE",
+  		"VARIEDADES": ["TODAS", "RAF","PERA","MONTEROSA"]
+  	}
+
+  
+}
+

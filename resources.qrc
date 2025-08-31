@@ -1,0 +1,22 @@
+<!DOCTYPE RCC>
+<RCC>
+    <qresource prefix="/">
+        <file>images/save.png</file>
+        <file>images/new.png</file>
+        <file>images/copy.png</file>
+        <file>images/delete.png</file>
+        <file>images/nomachine.png</file>
+        <file>images/anydesk.png</file>
+        <file>images/terminal.png</file>
+        <file>images/shutdown.png</file>
+        <file>images/config.png</file>
+        <file>images/apps.png</file>
+        <file>images/mas.png</file>
+        <file>images/menos.png</file>
+        <file>images/ordenar.png</file>
+        <file>images/partida_activa.png</file>
+        <file>images/partida_noactiva.png</file>
+        <file>translations/PT.qm</file>
+        <file>translations/EN.qm</file>
+    </qresource>
+</RCC>
