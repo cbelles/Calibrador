@@ -9,6 +9,7 @@
 #include <QGroupBox>
 #include <QGridLayout>
 #include <QMessageBox>
+#include <QCloseEvent>
 
 TestSalidasDialog::TestSalidasDialog(int numOutputs, int numLines, OutputBoardManager* outputBoardManager, QWidget* parent)
     : QDialog(parent), _outputBoardManager(outputBoardManager), _numOutputs(numOutputs), _numLines(numLines),
@@ -41,7 +42,7 @@ void TestSalidasDialog::setupUI(int numOutputs, int numLines)
     mainLayout->setContentsMargins(10, 10, 10, 10); // Reducir márgenes del layout principal
     
     // Información sobre el test
-    QLabel* infoLabel = new QLabel(tr("Test de Salidas - Líneas: %1, Salidas por línea: %2")
+    QLabel* infoLabel = new QLabel(tr("Test de Salidas - Líneas: %1, Salidas por línea: %2\nMarque las salidas a testear y luego active el test")
                                    .arg(numLines).arg(numOutputs), this);
     infoLabel->setStyleSheet("font-weight: bold; font-size: 12pt; color: #2E8B57;");
     mainLayout->addWidget(infoLabel);
@@ -74,7 +75,7 @@ void TestSalidasDialog::setupUI(int numOutputs, int numLines)
         
         // Conectar cada botón individualmente con protección contra test continuo
         connect(testButton, &QPushButton::toggled, this, [=](bool checked) {
-            // Durante el test continuo, deshabilitar botones individuales
+            // Durante el test continuo, deshabilitar cambios en los botones
             if (_testRunning) {
                 testButton->blockSignals(true);
                 testButton->setChecked(!checked); // Revertir el cambio
@@ -82,15 +83,9 @@ void TestSalidasDialog::setupUI(int numOutputs, int numLines)
                 return;
             }
             
-            if (checked) {
-                // Activar esta salida en TODAS las líneas
-                activateOutputInAllLines(output);
-                testButton->setText("ON");
-            } else {
-                // Desactivar esta salida en TODAS las líneas
-                deactivateOutputInAllLines(output);
-                testButton->setText("OFF");
-            }
+            // En modo preparación: solo cambiar el estado visual del botón
+            // No activar hardware, solo marcar qué salidas se van a testear
+            testButton->setText(checked ? "ON" : "OFF");
         });
         
         _table->setCellWidget(0, output, testButton);
@@ -116,13 +111,13 @@ void TestSalidasDialog::setupUI(int numOutputs, int numLines)
     mainLayout->addWidget(controlGroup);
     
     // Etiqueta de estado
-    QLabel* statusLabel = new QLabel(tr("Estado: Listo para test"), this);
-    statusLabel->setStyleSheet("font-style: italic; color: #666;");
-    mainLayout->addWidget(statusLabel);
+    _statusLabel = new QLabel(tr("Estado: Marque las salidas a testear"), this);
+    _statusLabel->setStyleSheet("font-style: italic; color: #666;");
+    mainLayout->addWidget(_statusLabel);
     
     // Botones del diálogo
     QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
-    connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &TestSalidasDialog::onCloseRequested);
     mainLayout->addWidget(buttonBox);
 }
 
@@ -136,7 +131,7 @@ void TestSalidasDialog::onTestAllOutputs()
         _testRunning = false;
         _testTimer->stop();
         _testAllButton->setText(tr("Activar Test"));
-        //_testAllButton->setChecked(false);
+        _statusLabel->setText(tr("Estado: Marque las salidas a testear"));
         
         // Desactivar todas las salidas
         for(int line = 0; line < _numLines; ++line) {
@@ -146,22 +141,28 @@ void TestSalidasDialog::onTestAllOutputs()
             }
         }
         
-        // Actualizar botones en la tabla (solo una fila)
+        // NO cambiar el estado visual de los botones - mantener selección
+    } else {
+        // Verificar que hay al menos una salida seleccionada
+        bool hasSelectedOutputs = false;
         for(int output = 0; output < _numOutputs; ++output) {
             QPushButton* button = qobject_cast<QPushButton*>(_table->cellWidget(0, output));
-            if (button) {
-                button->blockSignals(true);
-                button->setChecked(false);
-                //button->setText("OFF");
-                button->blockSignals(false);
+            if (button && button->isChecked()) {
+                hasSelectedOutputs = true;
+                break;
             }
         }
-    } else {
+        
+        if (!hasSelectedOutputs) {
+            _statusLabel->setText(tr("Error: Debe marcar al menos una salida"));
+            return;
+        }
+        
         // Iniciar el test
         _testRunning = true;
         _currentState = false; // Empezar con todas OFF
         _testAllButton->setText(tr("Parar Test"));
-        //_testAllButton->setChecked(true);
+        _statusLabel->setText(tr("Estado: Test en curso - ciclando salidas seleccionadas"));
         
         // Iniciar el timer - cambiar estado cada 1000ms (1 segundo)
         _testTimer->start(1000);
@@ -197,9 +198,12 @@ void TestSalidasDialog::onTimerTick()
             std::vector<int> outputs;
             
             if (_currentState) {
-                // Activar todas las salidas
+                // Activar solo las salidas que están marcadas como ON
                 for(int output = 0; output < _numOutputs; ++output) {
-                    outputs.push_back(output);
+                    QPushButton* button = qobject_cast<QPushButton*>(_table->cellWidget(0, output));
+                    if (button && button->isChecked()) {
+                        outputs.push_back(output);
+                    }
                 }
             }
             // Si _currentState es false, el vector queda vacío (todas desactivadas)
@@ -208,16 +212,8 @@ void TestSalidasDialog::onTimerTick()
         }
     }
     
-    // Actualizar botones en la tabla (solo una fila)
-    for(int output = 0; output < _numOutputs; ++output) {
-        QPushButton* button = qobject_cast<QPushButton*>(_table->cellWidget(0, output));
-        if (button) {
-            button->blockSignals(true);
-            button->setChecked(_currentState);
-            //button->setText(_currentState ? "ON" : "OFF");
-            button->blockSignals(false);
-        }
-    }
+    // NO actualizar estado visual de los botones durante el test
+    // Los botones mantienen su estado de selección (marcados/no marcados)
 }
 
 void TestSalidasDialog::activateOutputInAllLines(int outputIndex)
@@ -238,4 +234,27 @@ void TestSalidasDialog::deactivateOutputInAllLines(int outputIndex)
             _outputBoardManager->deactivateOutput(line, outputIndex);
         }
     }
+}
+
+void TestSalidasDialog::onCloseRequested()
+{
+    if (_testRunning) {
+        _statusLabel->setText(tr("Error: Detenga el test antes de cerrar"));
+        return;
+    }
+    
+    // Si no hay test en curso, permitir cerrar
+    reject();
+}
+
+void TestSalidasDialog::closeEvent(QCloseEvent* event)
+{
+    if (_testRunning) {
+        _statusLabel->setText(tr("Error: Detenga el test antes de cerrar"));
+        event->ignore(); // Impedir el cierre
+        return;
+    }
+    
+    // Si no hay test en curso, permitir cerrar
+    event->accept();
 }

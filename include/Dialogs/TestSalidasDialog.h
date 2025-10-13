@@ -6,6 +6,8 @@
 #include <QPushButton>
 #include <QSpinBox>
 #include <QTimer>
+#include <QLabel>
+#include <QCloseEvent>
 #include <vector>
 #include "OutputBoards/OutputBoardManager.h"
 
@@ -16,9 +18,13 @@ public:
     explicit TestSalidasDialog(int numOutputs, int numLines, OutputBoardManager* outputBoardManager, 
                               QWidget* parent = nullptr);
 
+protected:
+    void closeEvent(QCloseEvent* event) override;
+
 private slots:
     void onTestAllOutputs();
     void onTimerTick();
+    void onCloseRequested();
 
 private:
     void setupUI(int numOutputs, int numLines);
@@ -30,6 +36,7 @@ private:
 private:
     QTableWidget* _table;
     QPushButton* _testAllButton;
+    QLabel* _statusLabel;
     
     OutputBoardManager* _outputBoardManager;
     int _numOutputs;
