@@ -56,6 +56,9 @@ public:
 
     void setPosSalidaFile(const string& possalidasfile) { _possalidasfile = possalidasfile; }
 
+    // Método para recargar posiciones de salida en caliente
+    void reloadOutputPositions();
+
     void setFruta(const string& fruta) { _fruta = fruta; }
     void setVariedad(const string& variedad) { _variedad = variedad; }
     const string& getFruta() const { return _fruta; }

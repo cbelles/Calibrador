@@ -907,9 +907,13 @@ void MainWindow::onPosSalidasButtonClicked()
         if (password == config_password) {
             OutputPositionsDialog dialog(_numsalidas, currentPositions, QString::fromStdString(_pathConfig), this);
             if (dialog.exec() == QDialog::Accepted) {
-                std::vector<int> newPositions = dialog.getPositions();
-                // TODO: Guardar las nuevas posiciones
-                // _currentProgram.setOutputPositions(newPositions);
+                // Recargar las posiciones en el CameraManager en caliente
+                if (_cameraManager) {
+                    _cameraManager->reloadOutputPositions();
+                    cout << "MainWindow: Posiciones de salida actualizadas en caliente" << endl;
+                } else {
+                    cout << "MainWindow: Advertencia - CameraManager no disponible para recarga" << endl;
+                }
             }       
         } else {
             QMessageBox::warning(this, tr("Error de Autenticación"), tr("Contraseña incorrecta."));

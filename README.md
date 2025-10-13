@@ -11,13 +11,19 @@
 ### config.json
 ```bash
 {
+ "dimwindow": {
+    "dimX": 1920,
+    "dimY":1060
+  },
+
   "logo": {
-    "showLogo": false,
-    "dimX": 400,
+    "showLogo": true,
+    "dimX": 380,
     "dimY":200
   },
   
   "general": {
+    "debugMode_ciclo_ms": 300,
     "debugMode": true,
     "pathPrograms": "/home/pi/CalibradorParams/Programs",
     "pathConfig": "/home/pi/CalibradorParams/Config",
@@ -25,9 +31,9 @@
   },
 
   "config": {
-    "numLineas": 2, 	
+    "numLineas": 1, 	
     "numSalidas": 16,
-    "idioma": "PT"  
+    "idioma": "PT" 
   },
 
   "dimensiones": {

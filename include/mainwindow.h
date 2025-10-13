@@ -29,7 +29,7 @@
 #include "Fotocelula.h"
 
 // Definir la constante de versión
-#define APP_VERSION "1.0.0"
+#define APP_VERSION "1.0.1"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT

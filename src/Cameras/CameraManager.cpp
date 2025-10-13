@@ -158,6 +158,20 @@ void CameraManager::setDebugMode(bool debugMode)
     _debugMode = debugMode;
 }
 
+void CameraManager::reloadOutputPositions()
+{
+    cout << "CameraManager: Recargando posiciones de salida desde " << _possalidasfile << endl;
+    
+    // Recargar las posiciones en todos los ExpulsionManager
+    for (int i = 0; i < static_cast<int>(_expulsionmanager.size()); i++) {
+        if (!_expulsionmanager[i].loadPositionsFromFile(_possalidasfile)) {
+            cout << "Error: No se pudieron recargar las posiciones para la línea " << i << endl;
+        }
+    }
+    
+    cout << "CameraManager: Posiciones de salida recargadas exitosamente" << endl;
+}
+
 void CameraManager::notifySensorActivation()
 {
     std::unique_lock<std::mutex> lock(_sensorMutex);
