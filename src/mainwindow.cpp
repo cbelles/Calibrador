@@ -519,7 +519,7 @@ void MainWindow::setupUI()
   
     appsButton = new QPushButton(this);
     appsButton->setIcon(QIcon(":/images/apps.png"));
-    appsButton->setText(tr("Aplicaciones"));
+    appsButton->setText(tr("Test Salidas"));
     appsButton->setIconSize(QSize(32, 32));
     appsButton->setMinimumHeight(buttonHeight);
     appsButton->setAutoFillBackground(true);
@@ -844,7 +844,7 @@ void MainWindow::createConnections()
     connect(terminalButton, &QPushButton::clicked, this, &MainWindow::onTerminalButtonClicked);
     connect(shutdownButton, &QPushButton::clicked, this, &MainWindow::onShutdownButtonClicked);
     connect(nomachineButton, &QPushButton::clicked, this, &MainWindow::onNomachineButtonClicked);
-    connect(appsButton, &QPushButton::clicked, this, &MainWindow::onAppsButtonClicked);
+    connect(appsButton, &QPushButton::clicked, this, &MainWindow::onTestSalidasButtonClicked);
     connect(anydeskButton, &QPushButton::clicked, this, &MainWindow::onAnydeskButtonClicked);
     connect(partidaButton, &QPushButton::clicked, this, &MainWindow::onPartidaButtonClicked);  
     connect(posSalidas, &QPushButton::clicked, this, &MainWindow::onPosSalidasButtonClicked);
@@ -926,9 +926,36 @@ void MainWindow::onPosSalidasButtonClicked()
  
 }
 
-void MainWindow::onAppsButtonClicked()
+void MainWindow::onTestSalidasButtonClicked()
 {
-    // TODO: Implementar la apertura de aplicaciones
+    // Crear vector con las salidas disponibles
+    std::vector<int> availableOutputs(_numsalidas);
+    for (int i = 0; i < _numsalidas; i++) {
+        availableOutputs[i] = i;
+    }
+
+    bool ok;
+    QString qpassword = QInputDialog::getText(this, tr("Autenticación Requerida"),
+                                             tr("Contraseña:"), QLineEdit::Password,
+                                             "", &ok);
+    std::string password = qpassword.toStdString();
+    string config_password = "insimtec";
+
+    if (ok && !password.empty()) {
+
+        if (password == config_password) {
+            TestSalidasDialog dialog(_numsalidas, _numlineas, _outputBoardManager, this);
+            if (dialog.exec() == QDialog::Accepted) {
+                cout << "MainWindow: Test de salidas completado" << endl;
+            }       
+        } else {
+            QMessageBox::warning(this, tr("Error de Autenticación"), tr("Contraseña incorrecta."));
+        }
+    } 
+    else {
+        // El usuario canceló el diálogo o no introdujo nada.
+        // Puedes mostrar un mensaje o simplemente no hacer nada.
+    }
 }
 
 void MainWindow::onAnydeskButtonClicked()

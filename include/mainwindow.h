@@ -25,11 +25,12 @@
 #include "Widgets/CounterWidget.h"
 #include "Widgets/DimensionsWidget.h"
 #include "Dialogs/OutputPositionsDialog.h"
+#include "Dialogs/TestSalidasDialog.h"
 #include "Cameras/CameraManager.h"
 #include "Fotocelula.h"
 
 // Definir la constante de versión
-#define APP_VERSION "1.0.1"
+#define APP_VERSION "1.0.2"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -64,7 +65,7 @@ private slots:
     void onShutdownButtonClicked();
     void onNomachineButtonClicked();
     void onPosSalidasButtonClicked();
-    void onAppsButtonClicked();
+    void onTestSalidasButtonClicked();
     void onAnydeskButtonClicked();
     void onSortCalibers();
     void onPartidaButtonClicked();  // Añadir esta línea antes del último slot

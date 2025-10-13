@@ -79,6 +79,7 @@ SET (SOURCES	main.cpp src/mainwindow.cpp
                 src/OutputBoards/OutputBoardManager.cpp
 
                 src/Dialogs/OutputPositionsDialog.cpp
+                src/Dialogs/TestSalidasDialog.cpp
                 )
 				
 SET (HEADERS    include/mainwindow.h   
@@ -115,6 +116,7 @@ SET (HEADERS    include/mainwindow.h
                 include/OutputBoards/OutputBoardManager.h
 
                 include/Dialogs/OutputPositionsDialog.h
+                include/Dialogs/TestSalidasDialog.h
 
                 include/Linux/network.h
                 include/ADVobfuscator_Lib/MetaString.h
