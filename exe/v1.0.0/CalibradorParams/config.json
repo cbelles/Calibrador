@@ -1,11 +1,17 @@
 {
+ "dimwindow": {
+    "dimX": 1920,
+    "dimY":1060
+  },
+
   "logo": {
     "showLogo": true,
-    "dimX": 400,
+    "dimX": 380,
     "dimY":200
   },
   
   "general": {
+    "debugMode_ciclo_ms": 300,
     "debugMode": true,
     "pathPrograms": "/home/pi/CalibradorParams/Programs",
     "pathConfig": "/home/pi/CalibradorParams/Config",
