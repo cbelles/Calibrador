@@ -123,6 +123,11 @@
         <translation>Pos. Saídas</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="537"/>
+        <source>Test Salidas</source>
+        <translation>Teste Saídas</translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.cpp" line="554"/>
         <source>Terminal</source>
         <translation>Terminal</translation>
@@ -254,4 +259,55 @@
         <translation>Saída %1</translation>
     </message>
 </context>
+
+<context>
+    <name>TestSalidasDialog</name>
+    <message>
+    	<source>Test Salidas</source>
+    	<translation>Teste Saídas</translation>
+    </message>
+    <message>
+    	<source>Test de Salidas</source>
+    	<translation>Teste de Saídas</translation>
+    </message>
+    <message>
+    	<source>Test de Salidas - Líneas: %1, Salidas por línea: %2
+Marque las salidas a testear y luego active el test</source>
+    	<translation>Teste de Saídas - Linhas: %1, Saídas por linha: %2
+Marque as saídas para testar e depois ative o teste</translation>
+    </message>
+    <message>
+    	<source>Controles de Test</source>
+    	<translation>Controles de Teste</translation>
+    </message>
+    <message>
+    	<source>Activar Test</source>
+    	<translation>Ativar Teste</translation>
+    </message>
+    <message>
+    	<source>Parar Test</source>
+    	<translation>Parar Teste</translation>
+    </message>
+    <message>
+    	<source>Estado: Marque las salidas a testear</source>
+    	<translation>Estado: Marque as saídas para testar</translation>
+    </message>
+    <message>
+    	<source>Estado: Test en curso - ciclando salidas seleccionadas</source>
+    	<translation>Estado: Teste em curso - ciclando saídas selecionadas</translation>
+    </message>
+    <message>
+    	<source>Error: Debe marcar al menos una salida</source>
+    	<translation>Erro: Deve marcar pelo menos uma saída</translation>
+    </message>
+    <message>
+    	<source>Error: Detenga el test antes de cerrar</source>
+    	<translation>Erro: Pare o teste antes de fechar</translation>
+    </message>
+    <message>
+    	<source>Close</source>
+    	<translation>Fechar</translation>
+    </message>
+</context>
+
 </TS>
