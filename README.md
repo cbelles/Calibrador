@@ -128,4 +128,7 @@ En CalibrationProgram se define lo que es un  programa de calibracion
 
 La clase CaliberClassifier la utiliza CamaraManager  para dados los parametros de una fruta, descubrir el calibre asociado.   
 
+## Dialogo Test de Salidas   
 
+![](./doc/testSalidas.png)   
+ 

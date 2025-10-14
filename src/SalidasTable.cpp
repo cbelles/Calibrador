@@ -201,9 +201,9 @@ void SalidasTable::addSpinBoxToCell(int row, int col, int value)
     }
     spinBox->setPalette(pal);
     
-    // Usar editingFinished en lugar de valueChanged
-    connect(spinBox, &QSpinBox::editingFinished,
-            [=]() { onCellChanged(row, col); });
+    // Usar valueChanged para respuesta inmediata en lugar de editingFinished
+    connect(spinBox, QOverload<int>::of(&QSpinBox::valueChanged),
+            [=](int) { onCellChanged(row, col); });
     
     setCellWidget(row, col, spinBox);
 }
