@@ -12,7 +12,7 @@
   
   "general": {
     "debugMode_ciclo_ms": 300,
-    "debugMode": true,
+    "debugMode": false,
     "pathPrograms": "/home/pi/CalibradorParams/Programs",
     "pathConfig": "/home/pi/CalibradorParams/Config",
     "pathPartidas": "/home/pi/CalibradorParams/Partidas"
