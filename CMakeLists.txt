@@ -146,3 +146,6 @@ TARGET_LINK_LIBRARIES(TestExpulsionManager)
 ADD_EXECUTABLE(TestTarjetasSalidas TestSalidas.cpp)
 TARGET_LINK_LIBRARIES(TestTarjetasSalidas Qt5::Core Qt5::Widgets Qt5::Gui )
 
+ADD_EXECUTABLE(TestSensor test_fotocelula.cpp)
+TARGET_LINK_LIBRARIES(TestSensor ${WIRINGOP_LIBRARIES})
+

@@ -110,6 +110,11 @@ public:
             try {
                 int value = digitalRead(_pin);
                 
+                //auto now = std::chrono::steady_clock::now();
+                //auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(now - _last_detection_time);
+                //cout << "value:" << value << " duration:" << duration.count() << "ms" << endl;
+                //_last_detection_time = now; 
+
                 if (value == 1) {
                     consecutive_ones++;
                     if (consecutive_ones >= REQUIRED_ONES) {
@@ -118,6 +123,12 @@ public:
                             _detected.store(true);
                             _previous_state = true;
                             cout << "Rising edge detected - Notifying..." << endl;
+                            
+                            // Imprimir el tiempo absoluto _last_detection_time en milisegundos
+                            //auto detection_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+                            //    _last_detection_time.time_since_epoch()).count();
+                            //cout << "Detection time: " << detection_time_ms << " ms (desde epoch)" << endl;
+
                             _cv.notify_all(); // Cambiado a notify_all
                             //emit sensorActivated(); // Emit signal
                         }
@@ -142,9 +153,6 @@ public:
         return _running && _thread.joinable();
     }
 
-signals:
-    //void sensorActivated();
-
 private:
     const int _pin;                    ///< WiringPi pin number
     std::atomic<bool> _running;        ///< Thread control flag
@@ -153,6 +161,8 @@ private:
     std::mutex _mutex;                ///< Synchronization mutex
     std::condition_variable _cv;      ///< Synchronization condition variable
     bool _previous_state = false;     ///< Previous state for edge detection
+
+    //std::chrono::steady_clock::time_point _last_detection_time;
 };
 
 #endif
