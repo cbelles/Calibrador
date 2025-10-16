@@ -131,4 +131,63 @@ La clase CaliberClassifier la utiliza CamaraManager  para dados los parametros d
 ## Dialogo Test de Salidas   
 
 ![](./doc/testSalidas.png)   
- 
+
+
+## Programas de Test
+
+### Test Sensor  (sudo ./TestSensor)
+
+Este  programa de test sirve para comprobar la lectura del sensor esta funcionando bien.  
+
+```bash
+pi@pi-ora5:~$ sudo ./TestSensor 
+[sudo] password for pi: 
+Test Fotocelula en pin GPIO (wPi): 0
+Pulsa Ctrl+C para salir...
+value:1 duration:34444ms
+value:1 duration:10ms
+value:1 duration:10ms
+Rising edge detected - Notifying...
+Detection time: 34464 ms (desde epoch)
+Detection received!
+Señal detectada en el sensor!
+value:1 duration:10ms
+value:1 duration:10ms
+value:1 duration:10ms
+value:1 duration:10ms
+value:1 duration:10ms
+value:1 duration:10ms
+value:1 duration:10ms
+value:1 duration:10ms  
+```   
+Con esta aplicación vemos el comportamiento de la clase Fotocelula, cada 10ms mira en la GPIO (posicion fisica 3) y muestra el valor :   
+
+value:1 duration:10ms
+Si value:1 -> el sensor no ve objeto
+Si value:0 -> el sensor ve objeto
+Este thread mandara un mensaje de notificacion de "cazoleta" :
+**Rising edge detected - Notifying...** cuando ve un flanco de paso de value:0 a value:1 y se mantiene value:1 tres veces.   
+Este filtrado del notificacion de "cazoleta" tiene parametros constantes en Fotocelula.h igual abria que parametrizar por fichero de configuracion!.
+Vemos que aqui esta enviando un Rising edge detected - Notifying... incorrecto, porque no habia sensor.   
+Se soluciona inicializando 
+
+```C++
+bool _previous_state = true;     ///< Previous state for edge detection
+```  
+Era un pequeño bug!. Solucionado
+
+```bash
+Test Fotocelula en pin GPIO (wPi): 0
+Pulsa Ctrl+C para salir...
+value:1 duration:74798ms
+value:1 duration:10ms
+value:1 duration:10ms
+value:1 duration:10ms
+value:1 duration:10ms
+value:1 duration:10ms
+value:1 duration:10ms
+value:1 duration:10ms
+value:1 duration:10ms
+value:1 duration:10ms
+value:1 duration:10ms
+``` 
